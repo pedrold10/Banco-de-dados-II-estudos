@@ -18,7 +18,7 @@ create table disciplina(
 create table professor(
 	MatricProf		serial 		NOT null,
 	NomeProf		VARCHAR(40),
-	DataAdmissao 	DATE
+	DataAdmissao 	DATE,
+	CoDISC		serial NOT null
 );
-
 ALTER TABLE Professor ADD CONSTRAINT PKprofessor PRIMARY KEY(MatricProf);
