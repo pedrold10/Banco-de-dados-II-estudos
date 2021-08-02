@@ -8,9 +8,6 @@ CREATE TABLE Artista(
 	pais varchar(20),
 	dataNasc date
 );
-drop table artista cascade;
-
-SELECT * FROM ARTISTA;
 
 CREATE TABLE PERSONAGEM(
 	nomePers varchar(25),
@@ -19,8 +16,7 @@ CREATE TABLE PERSONAGEM(
 	codArt integer,
 	constraint fk_codFilme foreign key (codFilme) references filme (codFilme),
 	constraint fk_codArt foreign key (codArt) references artista (codArt)
-)
-drop table personagem cascade;
+);
 create table filme(
 	codFilme serial primary key,
 	titulo varchar(25),
@@ -58,10 +54,10 @@ insert into estudio values(default,'Universal');
 	--  inserindo em personagem
 	
 insert into personagem values('Natalie',10000,1,1);
-insert into personagem values('Tom',10000,1,2);
-insert into personagem values('John',10000,5,3);
-insert into personagem values('Ana',6000,3,2);
-insert into personagem values('Tom',11000,6,5);
+insert into personagem values('Tom',10000,2,1);
+insert into personagem values('John',10000,3,5);
+insert into personagem values('Ana',6000,2,3);
+insert into personagem values('Tom',11000,5,6);
 insert into personagem values('John',12000,4,4);
 
 	-- inserindo em categoria
@@ -75,12 +71,12 @@ insert into categoria values(default,'Drama');
 
 	-- inserindo em filme
 	
-insert into filme values(default,'Encontro Explosivo',134,2010,4,1);
+insert into filme values(default,'Encontro Explosivo',134,2010,1,4);
 insert into filme values(default,'O Besouro Verde',155,2010,1,1);
-insert into filme values(default,'Comer, Rezar, Amar',177,2010,2,1);
-insert into filme values(default,'Coringa',122,2019,6,1);
-insert into filme values(default,'Era uma vez em Hollywood',119,2020,4,2);
-insert into filme values(default,'Nasce uma estrela',100,2018,6,1);
+insert into filme values(default,'Comer, Rezar, Amar',177,2010,1,2);
+insert into filme values(default,'Coringa',122,2019,1,6);
+insert into filme values(default,'Era uma vez em Hollywood',119,2020,2,4);
+insert into filme values(default,'Nasce uma estrela',100,2018,1,6);
 
 -- questão 6
 
