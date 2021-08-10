@@ -60,7 +60,7 @@ where f.duracao>120
 --4.      Verifique o comando seguinte (1,5):
 select a.codart
 from artista a
-where pais = ‘USA’
+where pais = 'USA'
    INTERSECT
 select p.codart
 from personagem p;
@@ -68,3 +68,82 @@ from personagem p;
 Refaça-o usando uma subquery.
 Depois, refaça-o usando JOIN.
 Compare os resultados e explique-os.*/
+
+-- Consulta com subquery
+
+select a.codart 
+from artista as a 
+where pais = 'USA' 
+and codart in (
+	select
+		p.codart
+	from 
+		personagem as p
+	where 
+		a.codart=p.codart
+)
+-- Consulta com JOIN
+
+select a.codart from
+artista a 
+join
+personagem p
+on (a.codart=p.codart)
+where pais='USA';
+
+					-- R. O comando retorna os artistas que possuem algum personagem regsitrado na tabela personagem, 
+					-- e que nasceram nos EUA
+					-- As 3 consultas retornaram o mesmo resultado porém em ordem diferente
+					
+--5.      Verifique agora o seguinte comando (1,5):
+select a.codart
+from artista a
+  EXCEPT
+select p.codart
+from personagem p; -- O comando retorna os artistas cujo não possuem personagem registrado na tabela personagem
+					/** EXCEPT retorna todas as linhas que estão no resultado de consulta 1, 
+					mas não no resultado de consulta 2 (operação diferença entre conjuntos).
+					O que o comando retorna?
+					Refaça-o usando uma subquery.
+					Depois, refaça-o usando JOIN (Utilize o left ou right join).*/
+-- Utilizando subquery
+select 
+	a.codart
+from 
+	artista as a 
+where
+	codart not in(
+		select p.codart
+	from
+		personagem as p
+	where 
+		a.codart=p.codart
+)
+
+-- Utilizando join
+
+select a.codart 
+from artista a
+left join personagem p
+on (p.codart=a.codart)
+where p.codart is null;
+
+--6.      Verifique agora o seguinte comando (1,0):
+select a.nomeart
+from artista a join personagem p on a.codart = p.codart
+where p.cache = (select max(p.cache) from personagem p);
+/*O que o comando retorna? 
+		R. Retorna o artista que teve o personagem com maior cache
+É possível executá-lo sem a subconsulta? Por quê?
+		R. Não é possível, pois o compilador retorna a seguinte mensagem de erro:
+				ERROR:  aggregate functions are not allowed in WHERE
+				Que significa que funções agregadas não são permitidas no where
+*/
+-- Tentativa de execução sem subconsulta
+select a.nomeart 
+from artista a
+join personagem p
+on a.codart = p.codart
+where p.cache = max(p.cache); -- Exato problema da consulta
+ 
+
